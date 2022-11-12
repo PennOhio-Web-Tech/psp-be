@@ -1,0 +1,29 @@
+version: "3.4"
+services:
+  test-api:
+    container_name: project-psp-test-api
+    build:
+      context: ../../
+      dockerfile: docker/testing/Dockerfile
+      target: development
+    volumes:
+      - ../../:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 4040:4040
+    command: yarn docker:test:run
+    depends_on:
+      - test-db
+    env_file:
+      - ../../.env.testing
+
+  test-db:
+    image: postgres:14
+    restart: always
+    container_name: project-psp-test-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: pe-test-db
