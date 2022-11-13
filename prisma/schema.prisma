@@ -7,10 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Menu {
+  id         String     @id @default(uuid())
+  name       String
+  categories Category[]
+
+  @@map("menu")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  products    Product[]
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  menu        Menu      @relation(fields: [menuId], references: [id])
+  menuId      String
+
+  @@map("category")
+}
+
 model Product {
-  id        String   @id @default(uuid())
-  name      String
-  price     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(uuid())
+  name        String
+  price       Float
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  topping     Topping[]
+
+  @@map("product")
+}
+
+model Topping {
+  id          String    @id @default(uuid())
+  name        String
+  priceSmall  Float
+  priceMedium Float
+  priceLarge  Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  product     Product[]
 }
