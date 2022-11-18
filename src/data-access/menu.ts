@@ -13,6 +13,7 @@ export default function makeMenuDb({ prisma }: MakeDb) {
             products: {
               include: {
                 topping: true,
+                category: true,
               },
             },
           },
