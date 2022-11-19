@@ -56,12 +56,13 @@ model Topping {
 }
 
 model Order {
-  id       String    @id @default(uuid())
-  subtotal Float
-  tax      Float
-  total    Float
-  paidWith String
-  products Product[]
+  id        String    @id @default(uuid())
+  subtotal  Float
+  createdAt DateTime  @default(now())
+  tax       Float
+  total     Float
+  paidWith  String
+  products  Product[]
 
   @@map("order")
 }
