@@ -47,9 +47,9 @@ model Product {
 model Topping {
   id          String    @id @default(uuid())
   name        String
-  priceSmall  Float
-  priceMedium Float
-  priceLarge  Float
+  priceSmall  Float?
+  priceMedium Float?
+  priceLarge  Float?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   product     Product[]
