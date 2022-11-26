@@ -9,19 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makeGetMenu({ getMenu }) {
-    return function getEngagement(httpRequest) {
+function makePostCreateOrder({ addOrder }) {
+    return function postCreateOrder(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const menu = yield getMenu();
-                console.log({ menu });
+                const orderFormInput = httpRequest.body;
+                const order = yield addOrder(orderFormInput);
                 return {
                     headers: { "Content-Type": "application/json" },
-                    statusCode: 200,
-                    body: { menu },
+                    statusCode: 201,
+                    body: { order },
                 };
             }
             catch (error) {
+                console.log({ error });
                 if (error instanceof Error) {
                     return {
                         headers: { "Content-Type": "application/json" },
@@ -33,4 +34,4 @@ function makeGetMenu({ getMenu }) {
         });
     };
 }
-exports.default = makeGetMenu;
+exports.default = makePostCreateOrder;

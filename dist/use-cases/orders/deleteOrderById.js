@@ -9,28 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makeGetMenu({ getMenu }) {
-    return function getEngagement(httpRequest) {
+function makeDeleteOrderById({ orderDb }) {
+    return function deleteOrderById(orderId) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const menu = yield getMenu();
-                console.log({ menu });
-                return {
-                    headers: { "Content-Type": "application/json" },
-                    statusCode: 200,
-                    body: { menu },
-                };
+            const order = yield orderDb.findById(orderId);
+            if (!order) {
+                throw new Error("Order not found");
             }
-            catch (error) {
-                if (error instanceof Error) {
-                    return {
-                        headers: { "Content-Type": "application/json" },
-                        statusCode: 400,
-                        body: { error: error.message },
-                    };
-                }
-            }
+            return yield orderDb.deleteOrder(orderId);
         });
     };
 }
-exports.default = makeGetMenu;
+exports.default = makeDeleteOrderById;

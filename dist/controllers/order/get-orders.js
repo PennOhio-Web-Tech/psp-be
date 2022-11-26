@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makeGetMenu({ getMenu }) {
-    return function getEngagement(httpRequest) {
+function makeGetAllOrders({ getOrders }) {
+    return function getAllOrders(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const menu = yield getMenu();
-                console.log({ menu });
+                const orders = yield getOrders();
                 return {
                     headers: { "Content-Type": "application/json" },
                     statusCode: 200,
-                    body: { menu },
+                    body: { orders },
                 };
             }
             catch (error) {
@@ -33,4 +32,4 @@ function makeGetMenu({ getMenu }) {
         });
     };
 }
-exports.default = makeGetMenu;
+exports.default = makeGetAllOrders;

@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makeGetMenu({ getMenu }) {
-    return function getEngagement(httpRequest) {
+function makeDeleteOrder({ deleteOrderById }) {
+    return function deleteOrder(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const menu = yield getMenu();
-                console.log({ menu });
+                const { orderId } = httpRequest.params;
+                const deletedOrder = yield deleteOrderById(orderId);
                 return {
                     headers: { "Content-Type": "application/json" },
                     statusCode: 200,
-                    body: { menu },
+                    body: { deletedOrder },
                 };
             }
             catch (error) {
@@ -33,4 +33,4 @@ function makeGetMenu({ getMenu }) {
         });
     };
 }
-exports.default = makeGetMenu;
+exports.default = makeDeleteOrder;

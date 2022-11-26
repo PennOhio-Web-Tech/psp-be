@@ -22,6 +22,7 @@ function makeMenuDb({ prisma }) {
                             products: {
                                 include: {
                                     topping: true,
+                                    category: true,
                                 },
                             },
                         },

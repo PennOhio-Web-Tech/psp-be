@@ -38,8 +38,6 @@ model Product {
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  String
   topping     Topping[]
-  Order       Order?    @relation(fields: [orderId], references: [id])
-  orderId     String?
 
   @@map("product")
 }
@@ -56,13 +54,33 @@ model Topping {
 }
 
 model Order {
-  id        String    @id @default(uuid())
-  subtotal  Float
-  createdAt DateTime  @default(now())
-  tax       Float
-  total     Float
-  paidWith  String
-  products  Product[]
+  id            String         @id @default(uuid())
+  subtotal      Float
+  createdAt     DateTime       @default(now())
+  tax           Float
+  total         Float
+  paidWith      String
+  isDeleted     Boolean        @default(false)
+  orderProducts OrderProduct[]
 
   @@map("order")
+}
+
+model OrderProduct {
+  id            String          @id @default(uuid())
+  order         Order           @relation(fields: [orderId], references: [id])
+  orderId       String
+  productName   String
+  orderToppings OrderToppings[]
+
+  @@map("order_product")
+}
+
+model OrderToppings {
+  id             String       @id @default(uuid())
+  orderProduct   OrderProduct @relation(fields: [orderProductId], references: [id])
+  orderProductId String
+  toppingName    String
+
+  @@map("order_toppings")
 }

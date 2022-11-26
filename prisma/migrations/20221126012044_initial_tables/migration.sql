@@ -23,6 +23,7 @@ CREATE TABLE "product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
+    "description" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "categoryId" TEXT NOT NULL,
@@ -31,16 +32,47 @@ CREATE TABLE "product" (
 );
 
 -- CreateTable
-CREATE TABLE "toppings" (
+CREATE TABLE "Topping" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "priceSmall" DOUBLE PRECISION NOT NULL,
-    "priceMedium" DOUBLE PRECISION NOT NULL,
-    "priceLarge" DOUBLE PRECISION NOT NULL,
+    "priceSmall" DOUBLE PRECISION,
+    "priceMedium" DOUBLE PRECISION,
+    "priceLarge" DOUBLE PRECISION,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "toppings_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Topping_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "order" (
+    "id" TEXT NOT NULL,
+    "subtotal" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "tax" DOUBLE PRECISION NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "paidWith" TEXT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "order_product" (
+    "id" TEXT NOT NULL,
+    "orderId" TEXT NOT NULL,
+    "productName" TEXT NOT NULL,
+
+    CONSTRAINT "order_product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "order_toppings" (
+    "id" TEXT NOT NULL,
+    "orderProductId" TEXT NOT NULL,
+    "toppingName" TEXT NOT NULL,
+
+    CONSTRAINT "order_toppings_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -62,7 +94,13 @@ ALTER TABLE "category" ADD CONSTRAINT "category_menuId_fkey" FOREIGN KEY ("menuI
 ALTER TABLE "product" ADD CONSTRAINT "product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "order_product" ADD CONSTRAINT "order_product_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order_toppings" ADD CONSTRAINT "order_toppings_orderProductId_fkey" FOREIGN KEY ("orderProductId") REFERENCES "order_product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "_ProductToTopping" ADD CONSTRAINT "_ProductToTopping_A_fkey" FOREIGN KEY ("A") REFERENCES "product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_ProductToTopping" ADD CONSTRAINT "_ProductToTopping_B_fkey" FOREIGN KEY ("B") REFERENCES "toppings"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ProductToTopping" ADD CONSTRAINT "_ProductToTopping_B_fkey" FOREIGN KEY ("B") REFERENCES "Topping"("id") ON DELETE CASCADE ON UPDATE CASCADE;

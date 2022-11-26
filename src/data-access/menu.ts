@@ -20,6 +20,7 @@ export default function makeMenuDb({ prisma }: MakeDb) {
         },
       },
     });
+
     return menu;
   }
 }

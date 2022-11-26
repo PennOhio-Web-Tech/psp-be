@@ -50,7 +50,8 @@
     "node": "^19.0.1",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0",
-    "zod": "^3.17.3"
+    "z": "^1.0.9",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",
