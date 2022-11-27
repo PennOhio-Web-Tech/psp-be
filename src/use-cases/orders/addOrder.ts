@@ -21,6 +21,7 @@ export default function makeAddOrder({ orderDb }: MakeOrder) {
           create: newOrder.getProducts().map((product) => {
             return {
               productName: product.productName,
+              productPrice: product.productPrice,
               orderToppings: {
                 create: product.toppings.map((topping) => {
                   return {
@@ -32,6 +33,7 @@ export default function makeAddOrder({ orderDb }: MakeOrder) {
           }),
         },
       },
+      include: { orderProducts: { include: { orderToppings: true } } },
     };
 
     return await orderDb.addOrder(orderCreated);

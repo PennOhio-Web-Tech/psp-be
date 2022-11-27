@@ -1,4 +1,10 @@
+import { z } from "zod";
+
 import { Category, Menu, Product, Topping } from "@prisma/client";
+import {
+  categoryCreateDTOValidator,
+  productCreateDTOValidator,
+} from "../validators/menu";
 
 export type WithMenuDb = {
   menuDb: MenuDb;
@@ -29,3 +35,6 @@ export type GetMenu = {
     })[]
   >;
 };
+
+export type CategoryCreateDTO = z.infer<typeof categoryCreateDTOValidator>;
+export type ProductCreateDTO = z.infer<typeof productCreateDTOValidator>;

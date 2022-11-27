@@ -9,3 +9,4 @@ const orderDb = makeOrderDb({ prisma });
 export { menuDb, orderDb };
 
 export type OrderDb = ReturnType<typeof makeOrderDb>;
+export type MenuDb = ReturnType<typeof makeMenuDb>;

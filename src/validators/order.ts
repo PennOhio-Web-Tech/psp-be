@@ -8,6 +8,7 @@ export const orderCreateDTOValidator = z.object({
   products: z.array(
     z.object({
       productName: z.string(),
+      productPrice: z.number().positive(),
       toppings: z.array(z.string()),
     })
   ),

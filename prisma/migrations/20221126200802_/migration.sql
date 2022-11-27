@@ -62,6 +62,7 @@ CREATE TABLE "order_product" (
     "id" TEXT NOT NULL,
     "orderId" TEXT NOT NULL,
     "productName" TEXT NOT NULL,
+    "productPrice" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "order_product_pkey" PRIMARY KEY ("id")
 );

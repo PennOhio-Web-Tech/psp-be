@@ -17,6 +17,7 @@ export default function makeOrderDb({ prisma }: MakeDb) {
   }
 
   async function addOrder(orderCreateInput: Prisma.OrderCreateArgs) {
+    console.log({ orderCreateInput });
     return await prisma.order.create(orderCreateInput);
   }
 

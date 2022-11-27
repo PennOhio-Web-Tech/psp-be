@@ -7,7 +7,6 @@ export default function makeGetMenu({ getMenu }: GetMenu) {
   ): Promise<HttpResponse | undefined> {
     try {
       const menu = await getMenu();
-      console.log({ menu });
       return {
         headers: { "Content-Type": "application/json" },
         statusCode: 200,

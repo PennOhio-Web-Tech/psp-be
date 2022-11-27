@@ -1,24 +1,28 @@
-import { Order } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { HttpRequest, HttpResponse } from "../../@types/http";
-import { OrderCreateDTO } from "../../@types/Order";
+import { ProductCreateDTO } from "../../@types/Menu";
 
-type AddOrder = {
-  addOrder: (orderCreateInput: OrderCreateDTO) => Promise<Order | null>;
+type AddProduct = {
+  addProduct: (
+    productCreateInput: ProductCreateDTO,
+    CategoryId: string
+  ) => Promise<Product | null>;
 };
 
-export default function makePostCreateOrder({ addOrder }: AddOrder) {
-  return async function postCreateOrder(
+export default function makePostCreateProduct({ addProduct }: AddProduct) {
+  return async function postCreateProduct(
     httpRequest: HttpRequest
   ): Promise<HttpResponse | undefined> {
     try {
-      const orderFormInput = httpRequest.body;
+      const { categoryId } = httpRequest.params;
+      const productFormInput = httpRequest.body;
       console.log(httpRequest);
-      const order = await addOrder(orderFormInput);
+      const product = await addProduct(productFormInput, categoryId);
 
       return {
         headers: { "Content-Type": "application/json" },
         statusCode: 201,
-        body: { order },
+        body: { product },
       };
     } catch (error) {
       console.log({ error });

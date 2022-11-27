@@ -9,17 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makePostCreateOrder({ addOrder }) {
-    return function postCreateOrder(httpRequest) {
+function makePostCreateCategory({ addCategory }) {
+    return function postCreateCategory(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const orderFormInput = httpRequest.body;
+                const { menuId } = httpRequest.params;
+                const categoryFormInput = httpRequest.body;
                 console.log(httpRequest);
-                const order = yield addOrder(orderFormInput);
+                const category = yield addCategory(categoryFormInput, menuId);
                 return {
                     headers: { "Content-Type": "application/json" },
                     statusCode: 201,
-                    body: { order },
+                    body: { category },
                 };
             }
             catch (error) {
@@ -35,4 +36,4 @@ function makePostCreateOrder({ addOrder }) {
         });
     };
 }
-exports.default = makePostCreateOrder;
+exports.default = makePostCreateCategory;

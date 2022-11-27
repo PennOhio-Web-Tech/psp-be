@@ -24,6 +24,7 @@ function makeAddOrder({ orderDb }) {
                         create: newOrder.getProducts().map((product) => {
                             return {
                                 productName: product.productName,
+                                productPrice: product.productPrice,
                                 orderToppings: {
                                     create: product.toppings.map((topping) => {
                                         return {
@@ -35,6 +36,7 @@ function makeAddOrder({ orderDb }) {
                         }),
                     },
                 },
+                include: { orderProducts: { include: { orderToppings: true } } },
             };
             return yield orderDb.addOrder(orderCreated);
         });

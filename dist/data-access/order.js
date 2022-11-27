@@ -19,12 +19,14 @@ function makeOrderDb({ prisma }) {
     function getOrders() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield prisma.order.findMany({
+                where: { isDeleted: false },
                 include: { orderProducts: { include: { orderToppings: true } } },
             });
         });
     }
     function addOrder(orderCreateInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log({ orderCreateInput });
             return yield prisma.order.create(orderCreateInput);
         });
     }

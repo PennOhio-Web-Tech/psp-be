@@ -71,6 +71,7 @@ model OrderProduct {
   order         Order           @relation(fields: [orderId], references: [id])
   orderId       String
   productName   String
+  productPrice  Float
   orderToppings OrderToppings[]
 
   @@map("order_product")

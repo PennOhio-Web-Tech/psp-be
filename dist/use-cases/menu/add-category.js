@@ -9,27 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function makeGetMenu({ getMenu }) {
-    return function getEngagement(httpRequest) {
+const entities_1 = require("../../entities");
+function makeAddCategory({ menuDb }) {
+    return function addCategory(category, menuId) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const menu = yield getMenu();
-                return {
-                    headers: { "Content-Type": "application/json" },
-                    statusCode: 200,
-                    body: { menu },
-                };
+            const menu = yield menuDb.findById(menuId);
+            if (!menu) {
+                throw new Error("Menu not found");
             }
-            catch (error) {
-                if (error instanceof Error) {
-                    return {
-                        headers: { "Content-Type": "application/json" },
-                        statusCode: 400,
-                        body: { error: error.message },
-                    };
-                }
-            }
+            const newCategory = (0, entities_1.makeCategory)(category);
+            const categoryCreated = {
+                data: {
+                    name: newCategory.getName(),
+                    description: newCategory.getDescription(),
+                    menu: { connect: { id: menuId } },
+                },
+                include: { products: true },
+            };
+            return yield menuDb.addCategory(categoryCreated);
         });
     };
 }
-exports.default = makeGetMenu;
+exports.default = makeAddCategory;

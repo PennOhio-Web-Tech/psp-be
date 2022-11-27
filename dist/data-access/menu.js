@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function makeMenuDb({ prisma }) {
     return Object.freeze({
         getMenu,
+        addCategory,
+        findById,
     });
     function getMenu() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,6 +30,20 @@ function makeMenuDb({ prisma }) {
                         },
                     },
                 },
+            });
+            return menu;
+        });
+    }
+    function addCategory(category) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newCategory = yield prisma.category.create(category);
+            return newCategory;
+        });
+    }
+    function findById(menuId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const menu = yield prisma.menu.findUnique({
+                where: { id: menuId },
             });
             return menu;
         });

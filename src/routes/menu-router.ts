@@ -4,3 +4,11 @@ import MenuController from "../controllers/menu";
 
 export const router = Router();
 router.get("/getMainMenu", makeCallback(MenuController.getMainMenu));
+router.post(
+  "/:menuId/category",
+  makeCallback(MenuController.postCreateCategory)
+);
+router.post(
+  "/:categoryId/product",
+  makeCallback(MenuController.postCreateProduct)
+);

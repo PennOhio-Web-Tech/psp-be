@@ -9,6 +9,7 @@ exports.orderCreateDTOValidator = zod_1.z.object({
     paidWith: zod_1.z.string(),
     products: zod_1.z.array(zod_1.z.object({
         productName: zod_1.z.string(),
+        productPrice: zod_1.z.number().positive(),
         toppings: zod_1.z.array(zod_1.z.string()),
     })),
 });
