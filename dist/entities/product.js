@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const zod_1 = require("zod");
 const menu_1 = require("../validators/menu");
-function buildMakeCategory() {
-    return function makeCategory(categoryCreateInput) {
+function buildMakeProduct() {
+    return function makeProduct(productCreateInput) {
         try {
-            menu_1.categoryCreateDTOValidator.parse(categoryCreateInput);
+            menu_1.productCreateDTOValidator.parse(productCreateInput);
         }
         catch (error) {
             if (error instanceof zod_1.z.ZodError) {
@@ -14,9 +14,10 @@ function buildMakeCategory() {
             }
         }
         return Object.freeze({
-            getName: () => categoryCreateInput.name,
-            getDescription: () => categoryCreateInput.description || "",
+            getName: () => productCreateInput.name,
+            getDescription: () => productCreateInput.description || "",
+            getPrice: () => productCreateInput.price,
         });
     };
 }
-exports.default = buildMakeCategory;
+exports.default = buildMakeProduct;

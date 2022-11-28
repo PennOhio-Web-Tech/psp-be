@@ -9,7 +9,7 @@ datasource db {
 
 model Menu {
   id         String     @id @default(uuid())
-  name       String
+  name       String     @unique
   categories Category[]
 
   @@map("menu")

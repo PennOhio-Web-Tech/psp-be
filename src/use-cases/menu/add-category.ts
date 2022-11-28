@@ -8,23 +8,14 @@ type MakeCategory = {
 };
 
 export default function makeAddCategory({ menuDb }: MakeCategory) {
-  return async function addCategory(
-    category: CategoryCreateDTO,
-    menuId: string
-  ) {
-    const menu = await menuDb.findById(menuId);
-
-    if (!menu) {
-      throw new Error("Menu not found");
-    }
-
+  return async function addCategory(category: CategoryCreateDTO) {
     const newCategory = makeCategory(category);
 
     const categoryCreated: Prisma.CategoryCreateArgs = {
       data: {
         name: newCategory.getName(),
         description: newCategory.getDescription(),
-        menu: { connect: { id: menuId } },
+        menu: { connect: { name: "dinner" } },
       },
       include: { products: true },
     };

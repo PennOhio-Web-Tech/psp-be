@@ -9,3 +9,5 @@ const express_callback_1 = __importDefault(require("../controllers/express-callb
 const menu_1 = __importDefault(require("../controllers/menu"));
 exports.router = (0, express_1.Router)();
 exports.router.get("/getMainMenu", (0, express_callback_1.default)(menu_1.default.getMainMenu));
+exports.router.post("/:menuId/category", (0, express_callback_1.default)(menu_1.default.postCreateCategory));
+exports.router.post("/:categoryId/product", (0, express_callback_1.default)(menu_1.default.postCreateProduct));

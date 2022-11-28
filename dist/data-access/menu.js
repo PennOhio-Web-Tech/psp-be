@@ -14,6 +14,8 @@ function makeMenuDb({ prisma }) {
         getMenu,
         addCategory,
         findById,
+        addProduct,
+        findCategoryById,
     });
     function getMenu() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -40,12 +42,26 @@ function makeMenuDb({ prisma }) {
             return newCategory;
         });
     }
+    function addProduct(product) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newProduct = yield prisma.product.create(product);
+            return newProduct;
+        });
+    }
     function findById(menuId) {
         return __awaiter(this, void 0, void 0, function* () {
             const menu = yield prisma.menu.findUnique({
                 where: { id: menuId },
             });
             return menu;
+        });
+    }
+    function findCategoryById(categoryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const category = yield prisma.category.findUnique({
+                where: { id: categoryId },
+            });
+            return category;
         });
     }
 }

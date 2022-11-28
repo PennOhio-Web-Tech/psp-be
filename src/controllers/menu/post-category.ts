@@ -4,8 +4,7 @@ import { CategoryCreateDTO } from "../../@types/Menu";
 
 type AddCategory = {
   addCategory: (
-    categoryCreateInput: CategoryCreateDTO,
-    menuId: string
+    categoryCreateInput: CategoryCreateDTO
   ) => Promise<Category | null>;
 };
 
@@ -14,10 +13,9 @@ export default function makePostCreateCategory({ addCategory }: AddCategory) {
     httpRequest: HttpRequest
   ): Promise<HttpResponse | undefined> {
     try {
-      const { menuId } = httpRequest.params;
       const categoryFormInput = httpRequest.body;
       console.log(httpRequest);
-      const category = await addCategory(categoryFormInput, menuId);
+      const category = await addCategory(categoryFormInput);
 
       return {
         headers: { "Content-Type": "application/json" },
